@@ -20,10 +20,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Divider,
-  Collapse,
-  IconButton,
 } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
 import { WordPosition } from '../types';
 
 interface VerseData {
@@ -54,7 +51,6 @@ const OLDER_PSALTERS = {
 
 const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('verses');
-  const [verseExpanded, setVerseExpanded] = useState<boolean>(false);
   const [selectedVerse, setSelectedVerse] = useState<string>('Ps 6,2');
   const [selectedManuscripts, setSelectedManuscripts] = useState<string[]>([]);
   const [selectedOlderPsalters, setSelectedOlderPsalters] = useState<string[]>(['Witt', 'Klem', 'Poděbr', 'PTZ']);
@@ -75,18 +71,11 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
   const handleViewModeChange = (_event: React.MouseEvent<HTMLElement>, newMode: ViewMode | null) => {
     if (newMode !== null) {
       setViewMode(newMode);
-      if (newMode === 'verses') {
-        setVerseExpanded(false);
-      }
     }
   };
 
   const handleVerseChange = (event: SelectChangeEvent) => {
     setSelectedVerse(event.target.value);
-  };
-
-  const toggleVerseExpanded = () => {
-    setVerseExpanded(!verseExpanded);
   };
 
   const handleManuscriptChange = (event: SelectChangeEvent<string[]>) => {
@@ -113,19 +102,13 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
   };
 
   const filteredData = useMemo(() => {
-    // Use 'Všechny' sheet (Psalm 6 data) and sort by Latin
+    // Use 'Všechny' sheet (Psalm 6 data) - keep original word order from the text
     const data = psalterData['Všechny'] || [];
 
-    // Sort by latin text (handle null values)
-    const sortedData = [...data].sort((a, b) => {
-      const latinaA = a.latina || '';
-      const latinaB = b.latina || '';
-      return latinaA.localeCompare(latinaB, 'cs');
-    });
+    // Don't sort - keep the original order as in the psalm text
+    if (!searchTerm) return data;
 
-    if (!searchTerm) return sortedData;
-
-    return sortedData.filter((word: WordPosition) =>
+    return data.filter((word: WordPosition) =>
       (word.latina || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (word.biblpad || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -140,77 +123,45 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
     return (
       <Box>
         <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              cursor: 'pointer',
-              '&:hover': { bgcolor: 'action.hover' },
-              p: 1,
-              borderRadius: 1,
-            }}
-            onClick={toggleVerseExpanded}
-          >
-            <IconButton size="small">
-              {verseExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </IconButton>
-            <Typography variant="subtitle1" sx={{ ml: 1 }}>
-              Vybrat verš z Žalmu 6
-            </Typography>
-            {selectedVerse && verseExpanded && (
-              <Chip label={selectedVerse} size="small" sx={{ ml: 2 }} color="primary" />
-            )}
-          </Box>
-
-          <Collapse in={verseExpanded}>
-            <Grid container spacing={2} sx={{ mt: 1 }}>
-              <Grid item xs={12} md={4}>
-                <FormControl fullWidth>
-                  <InputLabel>Verš</InputLabel>
-                  <Select value={selectedVerse} onChange={handleVerseChange} label="Verš">
-                    {verses.map((v: string) => (
-                      <MenuItem key={v} value={v}>{v}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={8}>
-                <FormControl fullWidth>
-                  <InputLabel>Žaltáře k zobrazení</InputLabel>
-                  <Select
-                    multiple
-                    value={selectedOlderPsalters}
-                    onChange={handleOlderPsalterChange}
-                    label="Žaltáře k zobrazení"
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value: string) => (
-                          <Chip key={value} label={value} size="small" />
-                        ))}
-                      </Box>
-                    )}
-                  >
-                    {Object.entries(OLDER_PSALTERS).map(([abbr, info]) => (
-                      <MenuItem key={abbr} value={abbr}>
-                        {abbr} - {info.name} ({info.period})
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth>
+                <InputLabel>Verš</InputLabel>
+                <Select value={selectedVerse} onChange={handleVerseChange} label="Verš">
+                  {verses.map((v: string) => (
+                    <MenuItem key={v} value={v}>{v}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
-          </Collapse>
+            <Grid item xs={12} md={8}>
+              <FormControl fullWidth>
+                <InputLabel>Žaltáře k zobrazení</InputLabel>
+                <Select
+                  multiple
+                  value={selectedOlderPsalters}
+                  onChange={handleOlderPsalterChange}
+                  label="Žaltáře k zobrazení"
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value: string) => (
+                        <Chip key={value} label={value} size="small" />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {Object.entries(OLDER_PSALTERS).map(([abbr, info]) => (
+                    <MenuItem key={abbr} value={abbr}>
+                      {abbr} - {info.name} ({info.period})
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </Paper>
 
-        {!verseExpanded && (
-          <Paper elevation={2} sx={{ p: 4, textAlign: 'center' }}>
-            <Typography variant="body1" color="text.secondary">
-              Klikněte výše pro výběr verše
-            </Typography>
-          </Paper>
-        )}
-
-        {verseExpanded && verse && (
+        {verse && (
           <Paper elevation={2} sx={{ p: 3 }}>
           <Typography variant="h6" gutterBottom color="primary">
             {selectedVerse}
@@ -287,7 +238,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
       <Box>
         <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
           <Typography variant="subtitle1" gutterBottom fontWeight="bold">
-            Žalm 6 - slovo po slovu (seřazeno podle latiny)
+            Žalm 6 - slovo po slovu (v pořadí textu)
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
