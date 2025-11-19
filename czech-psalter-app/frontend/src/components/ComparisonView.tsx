@@ -20,7 +20,11 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Divider,
+  Collapse,
+  IconButton,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { WordPosition } from '../types';
 
 interface VerseData {
@@ -51,37 +55,39 @@ const OLDER_PSALTERS = {
 
 const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('verses');
-  const [selectedPsalm, setSelectedPsalm] = useState<string>('Všechny');
+  const [verseExpanded, setVerseExpanded] = useState<boolean>(false);
   const [selectedVerse, setSelectedVerse] = useState<string>('Ps 6,2');
   const [selectedManuscripts, setSelectedManuscripts] = useState<string[]>([]);
   const [selectedOlderPsalters, setSelectedOlderPsalters] = useState<string[]>(['Witt', 'Klem', 'Poděbr', 'PTZ']);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const psalms = Object.keys(psalterData);
   const verses = verseData ? Object.keys(verseData).sort((a, b) => {
     const numA = parseInt(a.split(',')[1]);
     const numB = parseInt(b.split(',')[1]);
     return numA - numB;
   }) : [];
 
+  // Use 'Všechny' sheet for word-by-word view (contains Psalm 6 data)
   const allManuscripts = useMemo(() => {
-    const firstWord = psalterData[selectedPsalm]?.[0];
+    const firstWord = psalterData['Všechny']?.[0];
     return firstWord ? Object.keys(firstWord.variants) : [];
-  }, [selectedPsalm, psalterData]);
+  }, [psalterData]);
 
   const handleViewModeChange = (_event: React.MouseEvent<HTMLElement>, newMode: ViewMode | null) => {
     if (newMode !== null) {
       setViewMode(newMode);
+      if (newMode === 'verses') {
+        setVerseExpanded(false);
+      }
     }
-  };
-
-  const handlePsalmChange = (event: SelectChangeEvent) => {
-    setSelectedPsalm(event.target.value);
-    setSelectedManuscripts([]);
   };
 
   const handleVerseChange = (event: SelectChangeEvent) => {
     setSelectedVerse(event.target.value);
+  };
+
+  const toggleVerseExpanded = () => {
+    setVerseExpanded(!verseExpanded);
   };
 
   const handleManuscriptChange = (event: SelectChangeEvent<string[]>) => {
@@ -108,62 +114,102 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
   };
 
   const filteredData = useMemo(() => {
-    const data = psalterData[selectedPsalm] || [];
-    if (!searchTerm) return data;
+    // Use 'Všechny' sheet (Psalm 6 data) and sort by Latin
+    const data = psalterData['Všechny'] || [];
 
-    return data.filter((word: WordPosition) =>
+    // Sort by latin text
+    const sortedData = [...data].sort((a, b) =>
+      a.latina.localeCompare(b.latina, 'cs')
+    );
+
+    if (!searchTerm) return sortedData;
+
+    return sortedData.filter((word: WordPosition) =>
       word.latina.toLowerCase().includes(searchTerm.toLowerCase()) ||
       word.biblpad.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [selectedPsalm, searchTerm, psalterData]);
+  }, [searchTerm, psalterData]);
 
   // Render verse comparison view
   const renderVerseView = () => {
-    if (!verseData || !selectedVerse) return null;
+    if (!verseData) return null;
 
-    const verse = verseData[selectedVerse];
-    if (!verse) return null;
+    const verse = selectedVerse ? verseData[selectedVerse] : null;
 
     return (
       <Box>
         <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <FormControl fullWidth>
-                <InputLabel>Verš</InputLabel>
-                <Select value={selectedVerse} onChange={handleVerseChange} label="Verš">
-                  {verses.map((v: string) => (
-                    <MenuItem key={v} value={v}>{v}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+              '&:hover': { bgcolor: 'action.hover' },
+              p: 1,
+              borderRadius: 1,
+            }}
+            onClick={toggleVerseExpanded}
+          >
+            <IconButton size="small">
+              {verseExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </IconButton>
+            <Typography variant="subtitle1" sx={{ ml: 1 }}>
+              Vybrat verš z Žalmu 6
+            </Typography>
+            {selectedVerse && verseExpanded && (
+              <Chip label={selectedVerse} size="small" sx={{ ml: 2 }} color="primary" />
+            )}
+          </Box>
+
+          <Collapse in={verseExpanded}>
+            <Grid container spacing={2} sx={{ mt: 1 }}>
+              <Grid item xs={12} md={4}>
+                <FormControl fullWidth>
+                  <InputLabel>Verš</InputLabel>
+                  <Select value={selectedVerse} onChange={handleVerseChange} label="Verš">
+                    {verses.map((v: string) => (
+                      <MenuItem key={v} value={v}>{v}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <FormControl fullWidth>
+                  <InputLabel>Žaltáře k zobrazení</InputLabel>
+                  <Select
+                    multiple
+                    value={selectedOlderPsalters}
+                    onChange={handleOlderPsalterChange}
+                    label="Žaltáře k zobrazení"
+                    renderValue={(selected) => (
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value: string) => (
+                          <Chip key={value} label={value} size="small" />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {Object.entries(OLDER_PSALTERS).map(([abbr, info]) => (
+                      <MenuItem key={abbr} value={abbr}>
+                        {abbr} - {info.name} ({info.period})
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={8}>
-              <FormControl fullWidth>
-                <InputLabel>Žaltáře k zobrazení</InputLabel>
-                <Select
-                  multiple
-                  value={selectedOlderPsalters}
-                  onChange={handleOlderPsalterChange}
-                  label="Žaltáře k zobrazení"
-                  renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {selected.map((value: string) => (
-                        <Chip key={value} label={value} size="small" />
-                      ))}
-                    </Box>
-                  )}
-                >
-                  {Object.entries(OLDER_PSALTERS).map(([abbr, info]) => (
-                    <MenuItem key={abbr} value={abbr}>
-                      {abbr} - {info.name} ({info.period})
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          </Collapse>
         </Paper>
+
+        {!verseExpanded && (
+          <Paper elevation={2} sx={{ p: 4, textAlign: 'center' }}>
+            <Typography variant="body1" color="text.secondary">
+              Klikněte výše pro výběr verše
+            </Typography>
+          </Paper>
+        )}
+
+        {verseExpanded && verse && (
 
         <Paper elevation={2} sx={{ p: 3 }}>
           <Typography variant="h6" gutterBottom color="primary">
@@ -230,6 +276,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
             </Table>
           </TableContainer>
         </Paper>
+        )}
       </Box>
     );
   };
@@ -239,25 +286,18 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
     return (
       <Box>
         <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+            Žalm 6 - slovo po slovu (seřazeno podle latiny)
+          </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={8}>
               <FormControl fullWidth>
-                <InputLabel>Psalm</InputLabel>
-                <Select value={selectedPsalm} onChange={handlePsalmChange} label="Psalm">
-                  {psalms.map((psalm: string) => (
-                    <MenuItem key={psalm} value={psalm}>{psalm}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>Select Manuscripts (max 5)</InputLabel>
+                <InputLabel>Vybrat rukopisy (max 5)</InputLabel>
                 <Select
                   multiple
                   value={selectedManuscripts}
                   onChange={handleManuscriptChange}
-                  label="Select Manuscripts (max 5)"
+                  label="Vybrat rukopisy (max 5)"
                   renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                       {selected.map((value: string) => (
@@ -278,14 +318,14 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
-                label="Search"
+                label="Hledat"
                 variant="outlined"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search Latin/BiblPad"
+                placeholder="Hledat v latině/BiblPad"
               />
             </Grid>
           </Grid>
@@ -293,15 +333,15 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
           <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Box sx={{ width: 20, height: 20, backgroundColor: '#c6efce', border: '1px solid #999' }} />
-              <Typography variant="body2">Autosemantic (big change)</Typography>
+              <Typography variant="body2">Autosemantikum (velká změna)</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Box sx={{ width: 20, height: 20, backgroundColor: '#ffeb9c', border: '1px solid #999' }} />
-              <Typography variant="body2">Synsemantic (small change)</Typography>
+              <Typography variant="body2">Synsemantikum (malá změna)</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Box sx={{ width: 20, height: 20, backgroundColor: '#ffffff', border: '1px solid #999' }} />
-              <Typography variant="body2">Identical (X)</Typography>
+              <Typography variant="body2">Identické (X)</Typography>
             </Box>
           </Box>
         </Paper>
@@ -343,7 +383,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
             </TableContainer>
             {filteredData.length > 200 && (
               <Typography variant="caption" sx={{ mt: 2, display: 'block', textAlign: 'center' }}>
-                Showing first 200 of {filteredData.length} words. Use search to filter results.
+                Zobrazeno prvních 200 z {filteredData.length} slov. Použijte vyhledávání pro filtrování.
               </Typography>
             )}
           </Paper>
@@ -352,7 +392,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
         {selectedManuscripts.length === 0 && (
           <Paper elevation={2} sx={{ p: 4, textAlign: 'center' }}>
             <Typography variant="body1" color="text.secondary">
-              Please select at least one manuscript to compare
+              Vyberte alespoň jeden rukopis k porovnání
             </Typography>
           </Paper>
         )}
@@ -363,9 +403,9 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
   return (
     <Box>
       <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h5" gutterBottom>Text Comparison View</Typography>
+        <Typography variant="h5" gutterBottom>Porovnání textů</Typography>
         <Typography variant="body2" color="text.secondary" gutterBottom>
-          Compare manuscript variations with color-coded changes
+          Porovnání variant rukopisů s barevným označením změn
         </Typography>
 
         <Box sx={{ mt: 2 }}>
