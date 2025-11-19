@@ -8,11 +8,23 @@ import {
   Grid,
 } from '@mui/material';
 import * as d3 from 'd3';
-import similarityData from '../data/similarity_analysis.json';
 
 type ViewType = 'heatmap' | 'dendrogram' | 'network';
 
-const ClusterView: React.FC = () => {
+interface ClusterViewProps {
+  similarityData: {
+    manuscripts: string[];
+    similarity_matrix: number[][];
+    distance_matrix: number[][];
+    linkage_matrix: number[][];
+    stats: {
+      num_manuscripts: number;
+      num_words: number;
+    };
+  };
+}
+
+const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
   const [viewType, setViewType] = useState<ViewType>('heatmap');
   const heatmapRef = useRef<SVGSVGElement>(null);
   const dendrogramRef = useRef<SVGSVGElement>(null);
@@ -39,21 +51,19 @@ const ClusterView: React.FC = () => {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
+      .attr('transform', \`translate(\${margin.left},\${margin.top})\`);
 
     const manuscripts = similarityData.manuscripts;
     const matrix = similarityData.similarity_matrix;
 
     const cellSize = Math.min(width, height) / manuscripts.length;
 
-    // Create color scale
     const colorScale = d3
       .scaleSequential(d3.interpolateRdYlGn)
       .domain([50, 100]);
 
-    // Draw cells
-    manuscripts.forEach((ms1, i) => {
-      manuscripts.forEach((ms2, j) => {
+    manuscripts.forEach((ms1: string, i: number) => {
+      manuscripts.forEach((ms2: string, j: number) => {
         const similarity = matrix[i][j];
         g.append('rect')
           .attr('x', j * cellSize)
@@ -64,48 +74,43 @@ const ClusterView: React.FC = () => {
           .attr('stroke', '#fff')
           .attr('stroke-width', 0.5)
           .append('title')
-          .text(`${ms1} - ${ms2}: ${similarity.toFixed(2)}%`);
+          .text(\`\${ms1} - \${ms2}: \${similarity.toFixed(2)}%\`);
       });
     });
 
-    // Add row labels
     g.selectAll('.row-label')
       .data(manuscripts)
       .enter()
       .append('text')
       .attr('class', 'row-label')
       .attr('x', -5)
-      .attr('y', (_, i) => i * cellSize + cellSize / 2)
+      .attr('y', (_: string, i: number) => i * cellSize + cellSize / 2)
       .attr('text-anchor', 'end')
       .attr('dominant-baseline', 'middle')
       .attr('font-size', '10px')
-      .text(d => d);
+      .text((d: string) => d);
 
-    // Add column labels
     g.selectAll('.col-label')
       .data(manuscripts)
       .enter()
       .append('text')
       .attr('class', 'col-label')
-      .attr('x', (_, i) => i * cellSize + cellSize / 2)
+      .attr('x', (_: string, i: number) => i * cellSize + cellSize / 2)
       .attr('y', -5)
       .attr('text-anchor', 'start')
-      .attr('transform', (_, i) => `rotate(-45, ${i * cellSize + cellSize / 2}, -5)`)
+      .attr('transform', (_: string, i: number) => \`rotate(-45, \${i * cellSize + cellSize / 2}, -5)\`)
       .attr('font-size', '10px')
-      .text(d => d);
+      .text((d: string) => d);
 
-    // Add legend
     const legendWidth = 200;
     const legendHeight = 20;
     const legend = g
       .append('g')
-      .attr('transform', `translate(${width - legendWidth}, ${-50})`);
+      .attr('transform', \`translate(\${width - legendWidth}, -50)\`);
 
     const legendScale = d3.scaleLinear().domain([50, 100]).range([0, legendWidth]);
+    const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat((d: d3.NumberValue) => \`\${d}%\`);
 
-    const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat(d => `${d}%`);
-
-    // Create gradient
     const defs = svg.append('defs');
     const linearGradient = defs
       .append('linearGradient')
@@ -116,8 +121,8 @@ const ClusterView: React.FC = () => {
       .data(d3.range(50, 101, 1))
       .enter()
       .append('stop')
-      .attr('offset', d => `${((d - 50) / 50) * 100}%`)
-      .attr('stop-color', d => colorScale(d));
+      .attr('offset', (d: number) => \`\${((d - 50) / 50) * 100}%\`)
+      .attr('stop-color', (d: number) => colorScale(d));
 
     legend
       .append('rect')
@@ -127,7 +132,7 @@ const ClusterView: React.FC = () => {
 
     legend
       .append('g')
-      .attr('transform', `translate(0, ${legendHeight})`)
+      .attr('transform', \`translate(0, \${legendHeight})\`)
       .call(legendAxis);
 
     legend
@@ -139,9 +144,8 @@ const ClusterView: React.FC = () => {
       .attr('font-weight', 'bold')
       .text('Similarity (%)');
 
-  }, [viewType]);
+  }, [viewType, similarityData]);
 
-  // Render Dendrogram
   useEffect(() => {
     if (viewType !== 'dendrogram' || !dendrogramRef.current) return;
 
@@ -156,34 +160,27 @@ const ClusterView: React.FC = () => {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
+      .attr('transform', \`translate(\${margin.left},\${margin.top})\`);
 
     const manuscripts = similarityData.manuscripts;
     const linkageMatrix = similarityData.linkage_matrix;
 
-    // Build hierarchy from linkage matrix
-    const nodes: any[] = manuscripts.map((name, i) => ({ name, id: i, height: 0 }));
+    const nodes: any[] = manuscripts.map((name: string, i: number) => ({ name, id: i, height: 0 }));
 
-    linkageMatrix.forEach((link, idx) => {
+    linkageMatrix.forEach((link: number[], idx: number) => {
       const newNode = {
         name: '',
         id: manuscripts.length + idx,
         height: link[2],
-        children: [
-          nodes[link[0]],
-          nodes[link[1]]
-        ]
+        children: [nodes[link[0]], nodes[link[1]]]
       };
       nodes.push(newNode);
     });
 
     const root = nodes[nodes.length - 1];
-
-    // Create cluster layout
     const cluster = d3.cluster<any>().size([height, width - 100]);
-    const tree = cluster(d3.hierarchy(root, d => d.children));
+    const tree = cluster(d3.hierarchy(root, (d: any) => d.children));
 
-    // Draw links
     g.selectAll('.link')
       .data(tree.links())
       .enter()
@@ -196,31 +193,29 @@ const ClusterView: React.FC = () => {
       .attr('stroke', '#555')
       .attr('stroke-width', 1.5);
 
-    // Draw nodes
     const node = g
       .selectAll('.node')
       .data(tree.descendants())
       .enter()
       .append('g')
       .attr('class', 'node')
-      .attr('transform', d => `translate(${d.y},${d.x})`);
+      .attr('transform', (d: any) => \`translate(\${d.y},\${d.x})\`);
 
     node
       .append('circle')
       .attr('r', 4)
-      .attr('fill', d => (d.children ? '#555' : '#1976d2'));
+      .attr('fill', (d: any) => (d.children ? '#555' : '#1976d2'));
 
     node
-      .filter(d => !d.children)
+      .filter((d: any) => !d.children)
       .append('text')
       .attr('dx', 8)
       .attr('dy', 3)
       .attr('font-size', '11px')
-      .text(d => d.data.name);
+      .text((d: any) => d.data.name);
 
-  }, [viewType]);
+  }, [viewType, similarityData]);
 
-  // Render Network Graph
   useEffect(() => {
     if (viewType !== 'network' || !networkRef.current) return;
 
@@ -229,43 +224,30 @@ const ClusterView: React.FC = () => {
 
     const width = 900;
     const height = 700;
-
     svg.attr('width', width).attr('height', height);
 
     const manuscripts = similarityData.manuscripts;
     const matrix = similarityData.similarity_matrix;
 
-    // Create nodes
-    const nodes = manuscripts.map((name, i) => ({
-      id: name,
-      index: i,
-    }));
-
-    // Create links (only for high similarity)
+    const nodes = manuscripts.map((name: string, i: number) => ({ id: name, index: i }));
     const links: any[] = [];
-    const threshold = 95; // Show links only for >95% similarity
+    const threshold = 95;
 
     for (let i = 0; i < manuscripts.length; i++) {
       for (let j = i + 1; j < manuscripts.length; j++) {
         const similarity = matrix[i][j];
         if (similarity > threshold) {
-          links.push({
-            source: manuscripts[i],
-            target: manuscripts[j],
-            value: similarity,
-          });
+          links.push({ source: manuscripts[i], target: manuscripts[j], value: similarity });
         }
       }
     }
 
-    // Create force simulation
     const simulation = d3
       .forceSimulation(nodes as any)
       .force('link', d3.forceLink(links).id((d: any) => d.id).distance(100))
       .force('charge', d3.forceManyBody().strength(-300))
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    // Draw links
     const link = svg
       .append('g')
       .selectAll('line')
@@ -276,7 +258,6 @@ const ClusterView: React.FC = () => {
       .attr('stroke-opacity', 0.6)
       .attr('stroke-width', (d: any) => (d.value - threshold) / 2);
 
-    // Draw nodes
     const node = svg
       .append('g')
       .selectAll('circle')
@@ -286,23 +267,33 @@ const ClusterView: React.FC = () => {
       .attr('r', 8)
       .attr('fill', '#1976d2')
       .call(d3.drag<any, any>()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended));
+        .on('start', (event: any) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        })
+        .on('drag', (event: any) => {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        })
+        .on('end', (event: any) => {
+          if (!event.active) simulation.alphaTarget(0);
+          event.subject.fx = null;
+          event.subject.fy = null;
+        }));
 
-    // Add labels
     const labels = svg
       .append('g')
       .selectAll('text')
       .data(nodes)
       .enter()
       .append('text')
-      .text(d => d.id)
+      .text((d: any) => d.id)
       .attr('font-size', '10px')
       .attr('dx', 12)
       .attr('dy', 4);
 
-    node.append('title').text(d => d.id);
+    node.append('title').text((d: any) => d.id);
 
     simulation.on('tick', () => {
       link
@@ -310,30 +301,11 @@ const ClusterView: React.FC = () => {
         .attr('y1', (d: any) => d.source.y)
         .attr('x2', (d: any) => d.target.x)
         .attr('y2', (d: any) => d.target.y);
-
       node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
-
       labels.attr('x', (d: any) => d.x).attr('y', (d: any) => d.y);
     });
 
-    function dragstarted(event: any) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      event.subject.fx = event.subject.x;
-      event.subject.fy = event.subject.y;
-    }
-
-    function dragged(event: any) {
-      event.subject.fx = event.x;
-      event.subject.fy = event.y;
-    }
-
-    function dragended(event: any) {
-      if (!event.active) simulation.alphaTarget(0);
-      event.subject.fx = null;
-      event.subject.fy = null;
-    }
-
-  }, [viewType]);
+  }, [viewType, similarityData]);
 
   return (
     <Box>
@@ -363,21 +335,9 @@ const ClusterView: React.FC = () => {
       </Paper>
 
       <Paper elevation={2} sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
-        {viewType === 'heatmap' && (
-          <Box>
-            <svg ref={heatmapRef}></svg>
-          </Box>
-        )}
-        {viewType === 'dendrogram' && (
-          <Box>
-            <svg ref={dendrogramRef}></svg>
-          </Box>
-        )}
-        {viewType === 'network' && (
-          <Box>
-            <svg ref={networkRef}></svg>
-          </Box>
-        )}
+        {viewType === 'heatmap' && <Box><svg ref={heatmapRef}></svg></Box>}
+        {viewType === 'dendrogram' && <Box><svg ref={dendrogramRef}></svg></Box>}
+        {viewType === 'network' && <Box><svg ref={networkRef}></svg></Box>}
       </Paper>
     </Box>
   );
