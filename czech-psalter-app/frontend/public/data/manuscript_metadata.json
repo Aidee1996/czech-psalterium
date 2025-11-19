@@ -1,0 +1,210 @@
+{
+  "metadata": {
+    "Boč": {
+      "full_name": "Kniha žalmů v Bibli Bočkově",
+      "date": "1430-1450",
+      "location": "Brno, MZA"
+    },
+    "Bosk": {
+      "full_name": "Kniha žalmů v Bibli boskovické",
+      "date": "1421-1425",
+      "location": "Olomouc"
+    },
+    "DlabSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně Dlabačově",
+      "date": "2. třetina 15. století",
+      "location": "Praha, Strahov"
+    },
+    "Cist": {
+      "full_name": "Kniha žalmů v Bibli cisterciácké",
+      "date": "1456",
+      "location": "New York, Pierpont Morgan Library"
+    },
+    "Dlouh": {
+      "full_name": "Kniha žalmů v Bibli Dlouhoveskéhho",
+      "date": "1475",
+      "location": "Praha, NK ČR"
+    },
+    "Hod": {
+      "full_name": "Kniha žalmů v Bibli hodějovské",
+      "date": "1440-1460",
+      "location": "Praha, NK ČR"
+    },
+    "Kladr": {
+      "full_name": "Kniha žalmů v Bibli kladrubské",
+      "date": "1471",
+      "location": "Praha, NK ČR"
+    },
+    "Kruml": {
+      "full_name": "Kniha žalmů v Bibli krumlovské",
+      "date": "1440-1460",
+      "location": "Praha, KNM"
+    },
+    "KristSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně královny Kristiny",
+      "date": "kolem 1440",
+      "location": "Roma, BAV"
+    },
+    "LitSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně litoměřickém",
+      "date": "2. polovina 15. století",
+      "location": "Litoměřice, SOA"
+    },
+    "Lobk": {
+      "full_name": "Kniha žalmů v Bibli lobkovické",
+      "date": "1479/1480",
+      "location": "Brno, MZA"
+    },
+    "LobkSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně lobkovickém",
+      "date": "70. léta 15. století",
+      "location": "Nelahozeves"
+    },
+    "Mik": {
+      "full_name": "Kniha žalmů v Bibli mikulovské",
+      "date": "1440-1460",
+      "location": "Brno, MZK"
+    },
+    "MikNZ": {
+      "full_name": "Kniha žalmů v tzv. mikulovském sborníku",
+      "date": "1466",
+      "location": "Praha, NK ČR"
+    },
+    "MikSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně mikulovském větším",
+      "date": "polovina 15. století",
+      "location": "Brno, MZK"
+    },
+    "MikSZMen": {
+      "full_name": "Kniha žalmů ve Starém zákoně mikulovském menším",
+      "date": "2. polovina 15. století",
+      "location": "Brno, MZK"
+    },
+    "Mil": {
+      "full_name": "Kniha žalmů v Bibli milánskésté",
+      "date": "polovina 15. století",
+      "location": "Milano"
+    },
+    "MladPror": {
+      "full_name": "Kniha žalmů v tzv. mladších Prorocích",
+      "date": "1429",
+      "location": "Praha, NK ČR"
+    },
+    "Nymb": {
+      "full_name": "Kniha žalmů v Bibli nymburské",
+      "date": "1462/1463",
+      "location": "Praha, KNM"
+    },
+    "RajhSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně rajhradském",
+      "date": "2. třetina 15. století",
+      "location": "Rajhrad"
+    },
+    "Šafh": {
+      "full_name": "Kniha žalmů v Bibli šafhauzské",
+      "date": "počátek 2. poloviny 15. století",
+      "location": "Schaffhausen"
+    },
+    "StenSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně Stentzchově",
+      "date": "15. století",
+      "location": "Praha, KNM"
+    },
+    "Talm": {
+      "full_name": "Kniha žalmů v Bibli talmbersské",
+      "date": "1460-1480",
+      "location": "Praha, NK ČR"
+    },
+    "Zábl": {
+      "full_name": "Kniha žalmů v Bibli Záblackého",
+      "date": "1476-1478",
+      "location": "Lviv"
+    },
+    "ZamSZ": {
+      "full_name": "Kniha žalmů ve Starém zákoně Zamojských",
+      "date": "1430-1440",
+      "location": "Praha, NK ČR"
+    },
+    "ŽaltAuck": {
+      "full_name": "Žaltář auklandský",
+      "date": "1466",
+      "location": "Auckland"
+    },
+    "BiblŽaltHist": {
+      "full_name": "Žaltář s druhou částí historických knih",
+      "date": "20. léta 15. století",
+      "location": "Praha, NK ČR"
+    },
+    "ŽaltFrantKlem": {
+      "full_name": "Žaltář se sv. Františkem",
+      "date": "konec 15. století",
+      "location": "Praha, NK ČR"
+    },
+    "ŽaltHor": {
+      "full_name": "Žaltář Horkého",
+      "date": "1450",
+      "location": "Praha, KNM"
+    },
+    "ŽaltJieš": {
+      "full_name": "Žaltář Jiešův",
+      "date": "1475",
+      "location": "Praha, NK ČR"
+    },
+    "ŽaltKlemNez": {
+      "full_name": "Žaltář klementinský neznámého původu",
+      "date": "2. polovina 15. století",
+      "location": "Praha, NK ČR"
+    },
+    "ŽaltKruml": {
+      "full_name": "Žaltář Alžběty, manželky Václava z Rovného",
+      "date": "70. léta 15. století",
+      "location": "Český Krumlov"
+    },
+    " NK XVII H 14": {
+      "full_name": "Žaltář neznámého původu",
+      "date": "polovina 15. století",
+      "location": "Praha, NK ČR"
+    }
+  },
+  "translation_families": {
+    "1. překlad žaltáře": [],
+    "2. překlad žaltáře": [],
+    "3. překlad žaltáře": [
+      "Bosk",
+      "MladPror",
+      "BiblŽaltHist",
+      "Boč",
+      "ZamSZ",
+      "MikSZ",
+      " NK XVII H 14",
+      "ŽaltHor",
+      "Mik",
+      "RajhSZ",
+      "Cist",
+      "Nymb",
+      "DlabSZ",
+      "Šafh",
+      "Talm",
+      "ŽaltAuck",
+      "ŽaltJieš",
+      "Lobk",
+      "ŽaltKlemNez",
+      "LitSZ",
+      "MikSZMen",
+      "ŽaltFrantKlem",
+      "StenSZ",
+      "Hod",
+      "Mil",
+      "MikNZ",
+      "LobkSZ",
+      "ŽaltKruml",
+      "Kladr",
+      "Dlouh",
+      "Zábl",
+      "KristSZ"
+    ],
+    "4. překlad žaltáře": [
+      "Kruml"
+    ]
+  }
+}
