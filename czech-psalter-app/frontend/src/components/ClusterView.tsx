@@ -186,9 +186,9 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .enter()
       .append('path')
       .attr('class', 'link')
-      .attr('d', d3.linkHorizontal()
+      .attr('d', d3.linkHorizontal<any, any>()
         .x((d: any) => d.y)
-        .y((d: any) => d.x))
+        .y((d: any) => d.x) as any)
       .attr('fill', 'none')
       .attr('stroke', '#555')
       .attr('stroke-width', 1.5);

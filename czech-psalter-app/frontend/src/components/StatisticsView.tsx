@@ -18,7 +18,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   PieChart,
   Pie,
@@ -142,7 +141,7 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ psalterData, manuscript
                   fill="#8884d8"
                   dataKey="value"
                 >
-                  {overallStats.map((entry, index) => (
+                  {overallStats.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

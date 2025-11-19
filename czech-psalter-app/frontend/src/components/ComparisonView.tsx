@@ -19,7 +19,6 @@ import {
   TextField,
 } from '@mui/material';
 import { WordPosition } from '../types';
-import { getManuscripts } from '../utils/dataLoader';
 
 interface ComparisonViewProps {
   psalterData: Record<string, WordPosition[]>;
