@@ -210,8 +210,7 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
         )}
 
         {verseExpanded && verse && (
-
-        <Paper elevation={2} sx={{ p: 3 }}>
+          <Paper elevation={2} sx={{ p: 3 }}>
           <Typography variant="h6" gutterBottom color="primary">
             {selectedVerse}
           </Typography>
