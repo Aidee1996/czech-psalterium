@@ -34,6 +34,7 @@ interface StatisticsViewProps {
       full_name: string;
       date: string;
       location: string;
+      signature?: string;
     }>;
     translation_families: Record<string, string[]>;
   };
@@ -188,14 +189,14 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ psalterData, manuscript
               <Table stickyHeader size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell sx={{ fontWeight: 'bold' }}>Abbreviation</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Abbr.</TableCell>
                     <TableCell sx={{ fontWeight: 'bold' }}>Full Name</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }}>Signature</TableCell>
                     <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }}>Location</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Variation Rate</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Autosemantic</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Synsemantic</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Identical</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Var. Rate</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Auto.</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Syn.</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Ident.</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -204,9 +205,9 @@ const StatisticsView: React.FC<StatisticsViewProps> = ({ psalterData, manuscript
                     return (
                       <TableRow key={stat.name} hover>
                         <TableCell sx={{ fontWeight: 'bold' }}>{stat.name}</TableCell>
-                        <TableCell>{meta.full_name || '-'}</TableCell>
+                        <TableCell sx={{ fontSize: '0.8rem' }}>{meta.full_name || '-'}</TableCell>
+                        <TableCell sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>{meta.signature || '-'}</TableCell>
                         <TableCell>{meta.date || '-'}</TableCell>
-                        <TableCell>{meta.location || '-'}</TableCell>
                         <TableCell align="right">{stat.variationRate.toFixed(2)}%</TableCell>
                         <TableCell align="right">{stat.autosemanticCount}</TableCell>
                         <TableCell align="right">{stat.synsemanticCount}</TableCell>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -6,6 +6,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Chip,
 } from '@mui/material';
 import * as d3 from 'd3';
 
@@ -35,6 +41,74 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       setViewType(newView);
     }
   };
+
+  // Calculate similarity statistics
+  const analysisData = useMemo(() => {
+    const manuscripts = similarityData.manuscripts;
+    const matrix = similarityData.similarity_matrix;
+    const pairs: { ms1: string; ms2: string; similarity: number }[] = [];
+
+    // Collect all pairs (upper triangle only)
+    for (let i = 0; i < manuscripts.length; i++) {
+      for (let j = i + 1; j < manuscripts.length; j++) {
+        pairs.push({
+          ms1: manuscripts[i],
+          ms2: manuscripts[j],
+          similarity: matrix[i][j]
+        });
+      }
+    }
+
+    // Sort by similarity
+    const sortedPairs = [...pairs].sort((a, b) => b.similarity - a.similarity);
+
+    // Calculate statistics
+    const avgSimilarity = pairs.reduce((sum, p) => sum + p.similarity, 0) / pairs.length;
+    const minSimilarity = Math.min(...pairs.map(p => p.similarity));
+    const maxSimilarity = Math.max(...pairs.map(p => p.similarity));
+
+    // Count pairs at different thresholds
+    const above95 = pairs.filter(p => p.similarity >= 95).length;
+    const above90 = pairs.filter(p => p.similarity >= 90).length;
+    const below80 = pairs.filter(p => p.similarity < 80).length;
+
+    // Find clusters (pairs above 98% similarity)
+    const clusters: string[][] = [];
+    const visited = new Set<string>();
+
+    pairs.filter(p => p.similarity >= 98).forEach(p => {
+      if (!visited.has(p.ms1) && !visited.has(p.ms2)) {
+        clusters.push([p.ms1, p.ms2]);
+        visited.add(p.ms1);
+        visited.add(p.ms2);
+      } else if (visited.has(p.ms1) && !visited.has(p.ms2)) {
+        const cluster = clusters.find(c => c.includes(p.ms1));
+        if (cluster) {
+          cluster.push(p.ms2);
+          visited.add(p.ms2);
+        }
+      } else if (!visited.has(p.ms1) && visited.has(p.ms2)) {
+        const cluster = clusters.find(c => c.includes(p.ms2));
+        if (cluster) {
+          cluster.push(p.ms1);
+          visited.add(p.ms1);
+        }
+      }
+    });
+
+    return {
+      topSimilar: sortedPairs.slice(0, 10),
+      leastSimilar: sortedPairs.slice(-10).reverse(),
+      avgSimilarity,
+      minSimilarity,
+      maxSimilarity,
+      above95,
+      above90,
+      below80,
+      totalPairs: pairs.length,
+      clusters
+    };
+  }, [similarityData]);
 
   // Render Heatmap
   useEffect(() => {
@@ -333,6 +407,76 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
           </Grid>
         </Grid>
       </Paper>
+
+      {/* Analysis Summary */}
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={2} sx={{ p: 2 }}>
+            <Typography variant="subtitle2" color="primary" gutterBottom>Similarity Statistics</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+              <Typography variant="body2">Average: <strong>{analysisData.avgSimilarity.toFixed(2)}%</strong></Typography>
+              <Typography variant="body2">Range: {analysisData.minSimilarity.toFixed(2)}% - {analysisData.maxSimilarity.toFixed(2)}%</Typography>
+              <Typography variant="body2">Total pairs: {analysisData.totalPairs}</Typography>
+              <Typography variant="body2" color="success.main">≥95%: {analysisData.above95} pairs</Typography>
+              <Typography variant="body2" color="warning.main">≥90%: {analysisData.above90} pairs</Typography>
+              <Typography variant="body2" color="error.main">&lt;80%: {analysisData.below80} pairs</Typography>
+            </Box>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={2} sx={{ p: 2 }}>
+            <Typography variant="subtitle2" color="primary" gutterBottom>Most Similar Pairs</Typography>
+            <TableContainer sx={{ maxHeight: 150 }}>
+              <Table size="small">
+                <TableBody>
+                  {analysisData.topSimilar.slice(0, 5).map((pair, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell sx={{ py: 0.5, fontSize: '0.75rem' }}>{pair.ms1} ↔ {pair.ms2}</TableCell>
+                      <TableCell align="right" sx={{ py: 0.5, fontSize: '0.75rem', color: 'success.main' }}>{pair.similarity.toFixed(1)}%</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={2} sx={{ p: 2 }}>
+            <Typography variant="subtitle2" color="primary" gutterBottom>Most Different Pairs</Typography>
+            <TableContainer sx={{ maxHeight: 150 }}>
+              <Table size="small">
+                <TableBody>
+                  {analysisData.leastSimilar.slice(0, 5).map((pair, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell sx={{ py: 0.5, fontSize: '0.75rem' }}>{pair.ms1} ↔ {pair.ms2}</TableCell>
+                      <TableCell align="right" sx={{ py: 0.5, fontSize: '0.75rem', color: 'error.main' }}>{pair.similarity.toFixed(1)}%</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      {/* Clusters */}
+      {analysisData.clusters.length > 0 && (
+        <Paper elevation={2} sx={{ p: 2, mb: 3 }}>
+          <Typography variant="subtitle2" color="primary" gutterBottom>
+            High Similarity Clusters (≥98%)
+          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+            {analysisData.clusters.map((cluster, idx) => (
+              <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, bgcolor: 'action.hover', p: 1, borderRadius: 1 }}>
+                <Typography variant="caption" sx={{ fontWeight: 'bold', mr: 1 }}>Cluster {idx + 1}:</Typography>
+                {cluster.map((ms, i) => (
+                  <Chip key={ms} label={ms} size="small" color={i === 0 ? 'primary' : 'default'} />
+                ))}
+              </Box>
+            ))}
+          </Box>
+        </Paper>
+      )}
 
       <Paper elevation={2} sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
         {viewType === 'heatmap' && <Box><svg ref={heatmapRef}></svg></Box>}

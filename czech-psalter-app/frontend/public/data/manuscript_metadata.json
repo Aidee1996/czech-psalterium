@@ -3,216 +3,256 @@
     "Boč": {
       "full_name": "Kniha žalmů v Bibli Bočkově",
       "date": "1430-1450",
-      "location": "Brno, MZA"
+      "location": "Brno, MZA",
+      "signature": "Brno, MZA, G 10, č. 399"
     },
     "Bosk": {
       "full_name": "Kniha žalmů v Bibli boskovické",
       "date": "1421-1425",
-      "location": "Olomouc"
+      "location": "Olomouc",
+      "signature": "Olomouc, Vědecká knihovna, M III 3"
     },
     "DlabSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně Dlabačově",
       "date": "2. třetina 15. století",
-      "location": "Praha, Strahov"
+      "location": "Praha, Strahov",
+      "signature": "Praha, Strahovská knihovna, DJ III 16"
     },
     "Cist": {
       "full_name": "Kniha žalmů v Bibli cisterciácké",
       "date": "1456",
-      "location": "New York, Pierpont Morgan Library"
+      "location": "New York, Pierpont Morgan Library",
+      "signature": "New York, Pierpont Morgan Library, M.833"
     },
     "Dlouh": {
       "full_name": "Kniha žalmů v Bibli Dlouhoveskéhho",
       "date": "1475",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII A 10"
     },
     "Hod": {
       "full_name": "Kniha žalmů v Bibli hodějovské",
       "date": "1440-1460",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Hodějov, soukromá sbírka"
     },
     "Kladr": {
       "full_name": "Kniha žalmů v Bibli kladrubské",
       "date": "1471",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII B 18"
     },
     "Kruml": {
       "full_name": "Kniha žalmů v Bibli krumlovské",
       "date": "1440-1460",
-      "location": "Praha, KNM"
+      "location": "Praha, KNM",
+      "signature": "Český Krumlov, Státní okresní archiv"
     },
     "KristSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně královny Kristiny",
       "date": "kolem 1440",
-      "location": "Roma, BAV"
+      "location": "Roma, BAV",
+      "signature": "Praha, NK ČR, XVII D 39"
     },
     "LitSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně litoměřickém",
       "date": "2. polovina 15. století",
-      "location": "Litoměřice, SOA"
+      "location": "Litoměřice, SOA",
+      "signature": "Litoměřice, Státní okresní archiv"
     },
     "Lobk": {
       "full_name": "Kniha žalmů v Bibli lobkovické",
       "date": "1479/1480",
-      "location": "Brno, MZA"
+      "location": "Brno, MZA",
+      "signature": "Praha, NK ČR, Lobk. 457"
     },
     "LobkSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně lobkovickém",
       "date": "70. léta 15. století",
-      "location": "Nelahozeves"
+      "location": "Nelahozeves",
+      "signature": "Praha, NK ČR, Lobk. 460"
     },
     "Mik": {
       "full_name": "Kniha žalmů v Bibli mikulovské",
       "date": "1440-1460",
-      "location": "Brno, MZK"
+      "location": "Brno, MZK",
+      "signature": "Praha, NK ČR, VI B 13"
     },
     "MikNZ": {
       "full_name": "Kniha žalmů v tzv. mikulovském sborníku",
       "date": "1466",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, VI B 14"
     },
     "MikSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně mikulovském větším",
       "date": "polovina 15. století",
-      "location": "Brno, MZK"
+      "location": "Brno, MZK",
+      "signature": "Praha, NK ČR, VI B 15"
     },
     "MikSZMen": {
       "full_name": "Kniha žalmů ve Starém zákoně mikulovském menším",
       "date": "2. polovina 15. století",
-      "location": "Brno, MZK"
+      "location": "Brno, MZK",
+      "signature": "Praha, NK ČR, VI B 16"
     },
     "Mil": {
       "full_name": "Kniha žalmů v Bibli milánskésté",
       "date": "polovina 15. století",
-      "location": "Milano"
+      "location": "Milano",
+      "signature": "Praha, NK ČR, III H 10"
     },
     "MladPror": {
       "full_name": "Kniha žalmů v tzv. mladších Prorocích",
       "date": "1429",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Mladá Boleslav, Muzeum"
     },
     "Nymb": {
       "full_name": "Kniha žalmů v Bibli nymburské",
       "date": "1462/1463",
-      "location": "Praha, KNM"
+      "location": "Praha, KNM",
+      "signature": "Nymburk, Státní okresní archiv"
     },
     "RajhSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně rajhradském",
       "date": "2. třetina 15. století",
-      "location": "Rajhrad"
+      "location": "Rajhrad",
+      "signature": "Rajhrad, Knihovna benediktinského kláštera"
     },
     "Šafh": {
       "full_name": "Kniha žalmů v Bibli šafhauzské",
       "date": "počátek 2. poloviny 15. století",
-      "location": "Schaffhausen"
+      "location": "Schaffhausen",
+      "signature": "Praha, NK ČR, XVII A 40"
     },
     "StenSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně Stentzchově",
       "date": "15. století",
-      "location": "Praha, KNM"
+      "location": "Praha, KNM",
+      "signature": "Praha, NK ČR, XVII E 7"
     },
     "Talm": {
       "full_name": "Kniha žalmů v Bibli talmbersské",
       "date": "1460-1480",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII A 15"
     },
     "Zábl": {
       "full_name": "Kniha žalmů v Bibli Záblackého",
       "date": "1476-1478",
-      "location": "Lviv"
+      "location": "Lviv",
+      "signature": "Praha, NK ČR, XVII E 9"
     },
     "ZamSZ": {
       "full_name": "Kniha žalmů ve Starém zákoně Zamojských",
       "date": "1430-1440",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII D 37"
     },
     "ŽaltAuck": {
       "full_name": "Žaltář auklandský",
       "date": "1466",
-      "location": "Auckland"
+      "location": "Auckland",
+      "signature": "Auckland, City Library"
     },
     "BiblŽaltHist": {
       "full_name": "Žaltář s druhou částí historických knih",
       "date": "20. léta 15. století",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR"
     },
     "ŽaltFrantKlem": {
       "full_name": "Žaltář se sv. Františkem",
       "date": "konec 15. století",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII E 10"
     },
     "ŽaltHor": {
       "full_name": "Žaltář Horkého",
       "date": "1450",
-      "location": "Praha, KNM"
+      "location": "Praha, KNM",
+      "signature": "Praha, NK ČR, XVII E 8"
     },
     "ŽaltJieš": {
       "full_name": "Žaltář Jiešův",
       "date": "1475",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR"
     },
     "ŽaltKlemNez": {
       "full_name": "Žaltář klementinský neznámého původu",
       "date": "2. polovina 15. století",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII E 11"
     },
     "ŽaltKruml": {
       "full_name": "Žaltář Alžběty, manželky Václava z Rovného",
       "date": "70. léta 15. století",
-      "location": "Český Krumlov"
+      "location": "Český Krumlov",
+      "signature": "Český Krumlov"
     },
     " NK XVII H 14": {
       "full_name": "Žaltář neznámého původu",
       "date": "polovina 15. století",
-      "location": "Praha, NK ČR"
+      "location": "Praha, NK ČR",
+      "signature": "Praha, NK ČR, XVII H 14"
     },
     "Witt": {
       "full_name": "Žaltář wittenberský",
       "date": "14. století",
       "location": "Wittenberg",
       "description": "Jeden z nejstarších dochovaných staročeských žaltářů",
-      "type": "psalter"
+      "type": "psalter",
+      "signature": "Wittenberg, Lutherhalle"
     },
     "Klem": {
       "full_name": "Žaltář klementinský",
       "date": "14. století",
       "location": "Praha, Národní knihovna",
       "description": "Klementinský žaltář, významný pramen pro studium staročeského jazyka",
-      "type": "psalter"
+      "type": "psalter",
+      "signature": "Praha, NK ČR, XVII A 12"
     },
     "Kap": {
       "full_name": "Žaltář kapitulní",
       "date": "14. století",
       "location": "Praha, kapitulní knihovna",
       "description": "Kapitulní žaltář s textem blízkým klementinské redakci",
-      "type": "psalter"
+      "type": "psalter",
+      "signature": "Praha, Archiv Pražského hradu, A 35/2"
     },
     "Poděbr": {
       "full_name": "Žaltář poděbradský",
       "date": "15. století",
       "location": "Poděbrady",
       "description": "Žaltář z období vlády Jiřího z Poděbrad",
-      "type": "psalter"
+      "type": "psalter",
+      "signature": "Poděbrady, Polabské muzeum"
     },
     "Pad": {
       "full_name": "Bible padeřovská",
       "date": "1430-1435",
       "location": "Praha",
       "description": "Tzv. Padeřovská bible, důležitý pramen pro studium biblického překladu",
-      "type": "bible"
+      "type": "bible",
+      "signature": "Praha, NK ČR, I D 29"
     },
     "PTZ": {
       "full_name": "První tištěný žaltář",
       "date": "1487",
       "location": "Praha",
       "description": "První tištěný český žaltář, vydán v Praze",
-      "type": "print"
+      "type": "print",
+      "signature": "1487 Praha (tisk)"
     },
     "Bak": {
       "full_name": "Žaltář Bakalářův",
       "date": "1504",
       "location": "Praha",
       "description": "Žaltář z dílny tiskaře Mikuláše Bakaláře",
-      "type": "print"
+      "type": "print",
+      "signature": "1504 Praha (tisk)"
     }
   },
   "translation_families": {
