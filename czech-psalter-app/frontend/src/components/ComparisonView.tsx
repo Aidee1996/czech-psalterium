@@ -18,22 +18,23 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
-import psalterDataRaw from '../data/psalter_data.json';
 import { WordPosition } from '../types';
-import { decodeOptimizedData, getManuscripts, OptimizedData } from '../utils/dataLoader';
+import { getManuscripts } from '../utils/dataLoader';
 
-const optimizedData = psalterDataRaw as OptimizedData;
-const psalterData = decodeOptimizedData(optimizedData);
+interface ComparisonViewProps {
+  psalterData: Record<string, WordPosition[]>;
+}
 
-const ComparisonView: React.FC = () => {
+const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData }) => {
   const [selectedPsalm, setSelectedPsalm] = useState<string>('Všechny');
   const [selectedManuscripts, setSelectedManuscripts] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const psalms = Object.keys(psalterData);
   const allManuscripts = useMemo(() => {
-    return getManuscripts(optimizedData, selectedPsalm);
-  }, [selectedPsalm]);
+    const firstWord = psalterData[selectedPsalm]?.[0];
+    return firstWord ? Object.keys(firstWord.variants) : [];
+  }, [selectedPsalm, psalterData]);
 
   const handlePsalmChange = (event: SelectChangeEvent) => {
     setSelectedPsalm(event.target.value);
@@ -59,21 +60,19 @@ const ComparisonView: React.FC = () => {
   };
 
   const filteredData = useMemo(() => {
-    const data = psalterData[selectedPsalm as keyof typeof psalterData] as WordPosition[];
+    const data = psalterData[selectedPsalm] || [];
     if (!searchTerm) return data;
 
-    return data.filter(word =>
+    return data.filter((word: WordPosition) =>
       word.latina.toLowerCase().includes(searchTerm.toLowerCase()) ||
       word.biblpad.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [selectedPsalm, searchTerm]);
+  }, [selectedPsalm, searchTerm, psalterData]);
 
   return (
     <Box>
       <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h5" gutterBottom>
-          Text Comparison View
-        </Typography>
+        <Typography variant="h5" gutterBottom>Text Comparison View</Typography>
         <Typography variant="body2" color="text.secondary" gutterBottom>
           Compare manuscript variations with color-coded changes
         </Typography>
@@ -83,10 +82,8 @@ const ComparisonView: React.FC = () => {
             <FormControl fullWidth>
               <InputLabel>Psalm</InputLabel>
               <Select value={selectedPsalm} onChange={handlePsalmChange} label="Psalm">
-                {psalms.map(psalm => (
-                  <MenuItem key={psalm} value={psalm}>
-                    {psalm}
-                  </MenuItem>
+                {psalms.map((psalm: string) => (
+                  <MenuItem key={psalm} value={psalm}>{psalm}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -101,13 +98,13 @@ const ComparisonView: React.FC = () => {
                 label="Select Manuscripts (max 5)"
                 renderValue={(selected) => (
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
+                    {selected.map((value: string) => (
                       <Chip key={value} label={value} size="small" />
                     ))}
                   </Box>
                 )}
               >
-                {allManuscripts.map(ms => (
+                {allManuscripts.map((ms: string) => (
                   <MenuItem
                     key={ms}
                     value={ms}
@@ -133,36 +130,15 @@ const ComparisonView: React.FC = () => {
 
         <Box sx={{ mt: 2, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                backgroundColor: '#c6efce',
-                border: '1px solid #999',
-              }}
-            />
+            <Box sx={{ width: 20, height: 20, backgroundColor: '#c6efce', border: '1px solid #999' }} />
             <Typography variant="body2">Autosemantic (big change)</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                backgroundColor: '#ffeb9c',
-                border: '1px solid #999',
-              }}
-            />
+            <Box sx={{ width: 20, height: 20, backgroundColor: '#ffeb9c', border: '1px solid #999' }} />
             <Typography variant="body2">Synsemantic (small change)</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                backgroundColor: '#ffffff',
-                border: '1px solid #999',
-              }}
-            />
+            <Box sx={{ width: 20, height: 20, backgroundColor: '#ffffff', border: '1px solid #999' }} />
             <Typography variant="body2">Identical (X)</Typography>
           </Box>
         </Box>
@@ -174,37 +150,24 @@ const ComparisonView: React.FC = () => {
             <Table stickyHeader size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
-                    Latin
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
-                    BiblPad (Reference)
-                  </TableCell>
-                  {selectedManuscripts.map(ms => (
-                    <TableCell
-                      key={ms}
-                      sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}
-                    >
-                      {ms}
-                    </TableCell>
+                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>Latin</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>BiblPad (Reference)</TableCell>
+                  {selectedManuscripts.map((ms: string) => (
+                    <TableCell key={ms} sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>{ms}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredData.slice(0, 200).map((word, idx) => (
+                {filteredData.slice(0, 200).map((word: WordPosition, idx: number) => (
                   <TableRow key={idx} hover>
-                    <TableCell sx={{ fontStyle: 'italic', color: '#666' }}>
-                      {word.latina}
-                    </TableCell>
+                    <TableCell sx={{ fontStyle: 'italic', color: '#666' }}>{word.latina}</TableCell>
                     <TableCell sx={{ fontWeight: 'bold' }}>{word.biblpad}</TableCell>
-                    {selectedManuscripts.map(ms => {
+                    {selectedManuscripts.map((ms: string) => {
                       const variant = word.variants[ms];
                       return (
                         <TableCell key={ms} sx={getCellStyle(variant.type)}>
                           {variant.value === 'X' ? (
-                            <Typography variant="body2" color="text.secondary">
-                              X
-                            </Typography>
+                            <Typography variant="body2" color="text.secondary">X</Typography>
                           ) : (
                             variant.value || '-'
                           )}

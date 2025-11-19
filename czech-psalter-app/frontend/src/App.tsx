@@ -14,9 +14,9 @@ import {
 } from '@mui/material';
 
 import { useData } from './utils/useData';
-import ClusterView from './components/ClusterView-updated';
-import ComparisonView from './components/ComparisonView-updated';
-import StatisticsView from './components/StatisticsView-updated';
+import ClusterView from './components/ClusterView';
+import ComparisonView from './components/ComparisonView';
+import StatisticsView from './components/StatisticsView';
 
 const theme = createTheme({
   palette: {

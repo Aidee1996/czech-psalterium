@@ -4,8 +4,6 @@ import {
   Paper,
   Typography,
   Grid,
-  Card,
-  CardContent,
   Table,
   TableBody,
   TableCell,
@@ -26,29 +24,37 @@ import {
   Pie,
   Cell,
 } from 'recharts';
-import psalterDataRaw from '../data/psalter_data.json';
-import manuscriptMetadata from '../data/manuscript_metadata.json';
 import { WordPosition, ManuscriptStats } from '../types';
-import { decodeOptimizedData, getManuscripts, OptimizedData } from '../utils/dataLoader';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const optimizedData = psalterDataRaw as OptimizedData;
-const psalterData = decodeOptimizedData(optimizedData);
+interface StatisticsViewProps {
+  psalterData: Record<string, WordPosition[]>;
+  manuscriptMetadata: {
+    metadata: Record<string, {
+      full_name: string;
+      date: string;
+      location: string;
+    }>;
+    translation_families: Record<string, string[]>;
+  };
+}
 
-const StatisticsView: React.FC = () => {
+const StatisticsView: React.FC<StatisticsViewProps> = ({ psalterData, manuscriptMetadata }) => {
   const stats = useMemo(() => {
-    const allPsalms = psalterData['Všechny'] as WordPosition[];
-    const manuscripts = getManuscripts(optimizedData, 'Všechny');
+    const allPsalms = psalterData['Všechny'] || [];
+    if (allPsalms.length === 0) return [];
 
-    return manuscripts.map(ms => {
+    const manuscripts = Object.keys(allPsalms[0].variants);
+
+    return manuscripts.map((ms: string) => {
       let identicalCount = 0;
       let autosemanticCount = 0;
       let synsemanticCount = 0;
       let otherCount = 0;
       let totalWords = 0;
 
-      allPsalms.forEach(word => {
+      allPsalms.forEach((word: WordPosition) => {
         const variant = word.variants[ms];
         if (variant.value) {
           totalWords++;
@@ -68,7 +74,7 @@ const StatisticsView: React.FC = () => {
         }
       });
 
-      const variationRate = ((totalWords - identicalCount) / totalWords) * 100;
+      const variationRate = totalWords > 0 ? ((totalWords - identicalCount) / totalWords) * 100 : 0;
 
       return {
         name: ms,
@@ -80,18 +86,14 @@ const StatisticsView: React.FC = () => {
         variationRate,
       } as ManuscriptStats;
     });
-  }, []);
+  }, [psalterData]);
 
   const topVariants = useMemo(() => {
-    return [...stats]
-      .sort((a, b) => b.variationRate - a.variationRate)
-      .slice(0, 10);
+    return [...stats].sort((a, b) => b.variationRate - a.variationRate).slice(0, 10);
   }, [stats]);
 
   const topConservative = useMemo(() => {
-    return [...stats]
-      .sort((a, b) => a.variationRate - b.variationRate)
-      .slice(0, 10);
+    return [...stats].sort((a, b) => a.variationRate - b.variationRate).slice(0, 10);
   }, [stats]);
 
   const overallStats = useMemo(() => {
@@ -113,26 +115,21 @@ const StatisticsView: React.FC = () => {
     ];
   }, [stats]);
 
-  const metadata = manuscriptMetadata.metadata as Record<string, any>;
+  const metadata = manuscriptMetadata.metadata;
 
   return (
     <Box>
       <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h5" gutterBottom>
-          Manuscript Statistics & Profiles
-        </Typography>
+        <Typography variant="h5" gutterBottom>Manuscript Statistics & Profiles</Typography>
         <Typography variant="body2" color="text.secondary">
           Comprehensive analysis of variation patterns across all manuscripts
         </Typography>
       </Paper>
 
       <Grid container spacing={3}>
-        {/* Overall Distribution */}
         <Grid item xs={12} md={6}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Overall Change Distribution
-            </Typography>
+            <Typography variant="h6" gutterBottom>Overall Change Distribution</Typography>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -155,12 +152,9 @@ const StatisticsView: React.FC = () => {
           </Paper>
         </Grid>
 
-        {/* Variation Rate Chart */}
         <Grid item xs={12} md={6}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Top 10 Most Innovative Manuscripts
-            </Typography>
+            <Typography variant="h6" gutterBottom>Top 10 Most Innovative Manuscripts</Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={topVariants}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -173,12 +167,9 @@ const StatisticsView: React.FC = () => {
           </Paper>
         </Grid>
 
-        {/* Top Conservative Manuscripts */}
         <Grid item xs={12}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Top 10 Most Conservative Manuscripts
-            </Typography>
+            <Typography variant="h6" gutterBottom>Top 10 Most Conservative Manuscripts</Typography>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={topConservative}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -191,12 +182,9 @@ const StatisticsView: React.FC = () => {
           </Paper>
         </Grid>
 
-        {/* Detailed Statistics Table */}
         <Grid item xs={12}>
           <Paper elevation={2} sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Manuscript Profiles
-            </Typography>
+            <Typography variant="h6" gutterBottom>Manuscript Profiles</Typography>
             <TableContainer sx={{ maxHeight: 500 }}>
               <Table stickyHeader size="small">
                 <TableHead>
@@ -205,38 +193,28 @@ const StatisticsView: React.FC = () => {
                     <TableCell sx={{ fontWeight: 'bold' }}>Full Name</TableCell>
                     <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
                     <TableCell sx={{ fontWeight: 'bold' }}>Location</TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">
-                      Variation Rate
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">
-                      Autosemantic
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">
-                      Synsemantic
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="right">
-                      Identical
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Variation Rate</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Autosemantic</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Synsemantic</TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="right">Identical</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {stats
-                    .sort((a, b) => b.variationRate - a.variationRate)
-                    .map(stat => {
-                      const meta = metadata[stat.name] || {};
-                      return (
-                        <TableRow key={stat.name} hover>
-                          <TableCell sx={{ fontWeight: 'bold' }}>{stat.name}</TableCell>
-                          <TableCell>{meta.full_name || '-'}</TableCell>
-                          <TableCell>{meta.date || '-'}</TableCell>
-                          <TableCell>{meta.location || '-'}</TableCell>
-                          <TableCell align="right">{stat.variationRate.toFixed(2)}%</TableCell>
-                          <TableCell align="right">{stat.autosemanticCount}</TableCell>
-                          <TableCell align="right">{stat.synsemanticCount}</TableCell>
-                          <TableCell align="right">{stat.identicalCount}</TableCell>
-                        </TableRow>
-                      );
-                    })}
+                  {stats.sort((a, b) => b.variationRate - a.variationRate).map((stat) => {
+                    const meta = metadata[stat.name] || {};
+                    return (
+                      <TableRow key={stat.name} hover>
+                        <TableCell sx={{ fontWeight: 'bold' }}>{stat.name}</TableCell>
+                        <TableCell>{meta.full_name || '-'}</TableCell>
+                        <TableCell>{meta.date || '-'}</TableCell>
+                        <TableCell>{meta.location || '-'}</TableCell>
+                        <TableCell align="right">{stat.variationRate.toFixed(2)}%</TableCell>
+                        <TableCell align="right">{stat.autosemanticCount}</TableCell>
+                        <TableCell align="right">{stat.synsemanticCount}</TableCell>
+                        <TableCell align="right">{stat.identicalCount}</TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
