@@ -51,7 +51,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', \`translate(\${margin.left},\${margin.top})\`);
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
     const manuscripts = similarityData.manuscripts;
     const matrix = similarityData.similarity_matrix;
@@ -74,7 +74,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
           .attr('stroke', '#fff')
           .attr('stroke-width', 0.5)
           .append('title')
-          .text(\`\${ms1} - \${ms2}: \${similarity.toFixed(2)}%\`);
+          .text(`${ms1} - ${ms2}: ${similarity.toFixed(2)}%`);
       });
     });
 
@@ -98,7 +98,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .attr('x', (_: string, i: number) => i * cellSize + cellSize / 2)
       .attr('y', -5)
       .attr('text-anchor', 'start')
-      .attr('transform', (_: string, i: number) => \`rotate(-45, \${i * cellSize + cellSize / 2}, -5)\`)
+      .attr('transform', (_: string, i: number) => `rotate(-45, ${i * cellSize + cellSize / 2}, -5)`)
       .attr('font-size', '10px')
       .text((d: string) => d);
 
@@ -106,10 +106,10 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
     const legendHeight = 20;
     const legend = g
       .append('g')
-      .attr('transform', \`translate(\${width - legendWidth}, -50)\`);
+      .attr('transform', `translate(${width - legendWidth}, -50)`);
 
     const legendScale = d3.scaleLinear().domain([50, 100]).range([0, legendWidth]);
-    const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat((d: d3.NumberValue) => \`\${d}%\`);
+    const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat((d: d3.NumberValue) => `${d}%`);
 
     const defs = svg.append('defs');
     const linearGradient = defs
@@ -121,7 +121,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .data(d3.range(50, 101, 1))
       .enter()
       .append('stop')
-      .attr('offset', (d: number) => \`\${((d - 50) / 50) * 100}%\`)
+      .attr('offset', (d: number) => `${((d - 50) / 50) * 100}%`)
       .attr('stop-color', (d: number) => colorScale(d));
 
     legend
@@ -132,7 +132,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
 
     legend
       .append('g')
-      .attr('transform', \`translate(0, \${legendHeight})\`)
+      .attr('transform', `translate(0, ${legendHeight})`)
       .call(legendAxis);
 
     legend
@@ -160,7 +160,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', \`translate(\${margin.left},\${margin.top})\`);
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
     const manuscripts = similarityData.manuscripts;
     const linkageMatrix = similarityData.linkage_matrix;
@@ -199,7 +199,7 @@ const ClusterView: React.FC<ClusterViewProps> = ({ similarityData }) => {
       .enter()
       .append('g')
       .attr('class', 'node')
-      .attr('transform', (d: any) => \`translate(\${d.y},\${d.x})\`);
+      .attr('transform', (d: any) => `translate(${d.y},${d.x})`);
 
     node
       .append('circle')
