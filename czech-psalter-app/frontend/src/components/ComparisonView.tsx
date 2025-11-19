@@ -116,16 +116,18 @@ const ComparisonView: React.FC<ComparisonViewProps> = ({ psalterData, verseData 
     // Use 'Všechny' sheet (Psalm 6 data) and sort by Latin
     const data = psalterData['Všechny'] || [];
 
-    // Sort by latin text
-    const sortedData = [...data].sort((a, b) =>
-      a.latina.localeCompare(b.latina, 'cs')
-    );
+    // Sort by latin text (handle null values)
+    const sortedData = [...data].sort((a, b) => {
+      const latinaA = a.latina || '';
+      const latinaB = b.latina || '';
+      return latinaA.localeCompare(latinaB, 'cs');
+    });
 
     if (!searchTerm) return sortedData;
 
     return sortedData.filter((word: WordPosition) =>
-      word.latina.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      word.biblpad.toLowerCase().includes(searchTerm.toLowerCase())
+      (word.latina || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (word.biblpad || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [searchTerm, psalterData]);
 
