@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - claude/czech-psalter-analysis-014MwE7q4erePwK3QcJWr2sm
   workflow_dispatch:
 
 permissions:
