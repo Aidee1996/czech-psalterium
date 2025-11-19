@@ -164,47 +164,89 @@
       "full_name": "Žaltář neznámého původu",
       "date": "polovina 15. století",
       "location": "Praha, NK ČR"
+    },
+    "Witt": {
+      "full_name": "Žaltář wittenberský",
+      "date": "14. století",
+      "location": "Wittenberg",
+      "description": "Jeden z nejstarších dochovaných staročeských žaltářů",
+      "type": "psalter"
+    },
+    "Klem": {
+      "full_name": "Žaltář klementinský",
+      "date": "14. století",
+      "location": "Praha, Národní knihovna",
+      "description": "Klementinský žaltář, významný pramen pro studium staročeského jazyka",
+      "type": "psalter"
+    },
+    "Kap": {
+      "full_name": "Žaltář kapitulní",
+      "date": "14. století",
+      "location": "Praha, kapitulní knihovna",
+      "description": "Kapitulní žaltář s textem blízkým klementinské redakci",
+      "type": "psalter"
+    },
+    "Poděbr": {
+      "full_name": "Žaltář poděbradský",
+      "date": "15. století",
+      "location": "Poděbrady",
+      "description": "Žaltář z období vlády Jiřího z Poděbrad",
+      "type": "psalter"
+    },
+    "Pad": {
+      "full_name": "Bible padeřovská",
+      "date": "1430-1435",
+      "location": "Praha",
+      "description": "Tzv. Padeřovská bible, důležitý pramen pro studium biblického překladu",
+      "type": "bible"
+    },
+    "PTZ": {
+      "full_name": "První tištěný žaltář",
+      "date": "1487",
+      "location": "Praha",
+      "description": "První tištěný český žaltář, vydán v Praze",
+      "type": "print"
+    },
+    "Bak": {
+      "full_name": "Žaltář Bakalářův",
+      "date": "1504",
+      "location": "Praha",
+      "description": "Žaltář z dílny tiskaře Mikuláše Bakaláře",
+      "type": "print"
     }
   },
   "translation_families": {
-    "1. překlad žaltáře": [],
-    "2. překlad žaltáře": [],
-    "3. překlad žaltáře": [
-      "Bosk",
-      "MladPror",
-      "BiblŽaltHist",
-      "Boč",
-      "ZamSZ",
-      "MikSZ",
-      " NK XVII H 14",
-      "ŽaltHor",
-      "Mik",
-      "RajhSZ",
-      "Cist",
-      "Nymb",
-      "DlabSZ",
-      "Šafh",
-      "Talm",
-      "ŽaltAuck",
-      "ŽaltJieš",
-      "Lobk",
-      "ŽaltKlemNez",
-      "LitSZ",
-      "MikSZMen",
-      "ŽaltFrantKlem",
-      "StenSZ",
-      "Hod",
-      "Mil",
-      "MikNZ",
-      "LobkSZ",
-      "ŽaltKruml",
-      "Kladr",
-      "Dlouh",
-      "Zábl",
-      "KristSZ"
-    ],
-    "4. překlad žaltáře": [
-      "Kruml"
-    ]
+    "older_psalters": {
+      "name": "Nejstarší žaltáře",
+      "description": "Žaltáře ze 14. století",
+      "manuscripts": [
+        "Witt",
+        "Klem",
+        "Kap"
+      ]
+    },
+    "poděbradská_redakce": {
+      "name": "Poděbradská redakce",
+      "description": "Žaltáře z 15. století",
+      "manuscripts": [
+        "Poděbr"
+      ]
+    },
+    "biblické_překlady": {
+      "name": "Biblické překlady",
+      "description": "Bible obsahující žalmy",
+      "manuscripts": [
+        "Bosk",
+        "Pad"
+      ]
+    },
+    "tištěné": {
+      "name": "Tištěné žaltáře",
+      "description": "První tisky žaltářů",
+      "manuscripts": [
+        "PTZ",
+        "Bak"
+      ]
+    }
   }
 }

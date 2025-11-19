@@ -1,0 +1,145 @@
+{
+  "Ps 6,1": {
+    "latina": "In finem, in carminibus. Psalmus David. Pro octava.",
+    "translations": {
+      "Witt": "",
+      "Klem": "",
+      "Kap": "",
+      "Poděbr": "",
+      "Bosk": "Do konce. Žalm Davidóv, na húslech a osmi strunách (první kající, šestý).",
+      "Pad": "Do koncě. Žalm Davidóv, na húslech a osmi strunách (První kající. VI.)",
+      "PTZ": "",
+      "Bak": ""
+    }
+  },
+  "Ps 6,2": {
+    "latina": "Domine, ne in furore tuo arguas me, neque in ira tua corripias me.",
+    "translations": {
+      "Witt": "Hospodine, ne v rydání tvém třeskci mě ani v hněvě tvém kaž mi.",
+      "Klem": "Hospodine, v rozľúceňú tvém netreskci mne ani v hněvě tvém potupuj mne.",
+      "Kap": "Hospodine, v rozlícení tvém netreskci mne ani v hněvě tvém potupuj mne.",
+      "Poděbr": "Hospodine, ne v rydání tvém laj mi ani v hněvě tvém treskci mne.",
+      "Bosk": "Hospodine, ne v prchání tvém treskci mě ani v hněvu svém kaž mě.",
+      "Pad": "Pane, ne v prchání tvém treskci mě ani v hněvu tvém kaž mne.",
+      "PTZ": "Hospodine, ne v prchlivosti své treskci mě aniž v hněvu svém káraj mě.",
+      "Bak": "Hospodine, ne v prchlivosti své treskci mě aniž v hněvu svém káraj mě."
+    }
+  },
+  "Ps 6,3": {
+    "latina": "Miserere mei, Domine, quoniam infirmus sum; sana me, Domine, quoniam conturbata sunt ossa mea.",
+    "translations": {
+      "Witt": "Smiluj sě nade mnú, hospodine, nebo nemocen sem, uzdrav mě, hospodine, nebo smúceny súť všěcky kosti mé.",
+      "Klem": "Smiluj sě nade mnú, hospodine, nebo nemocen sem, uzdrav mě, hospodine, nebo zamúceny sú kosti mé.",
+      "Kap": "Smiluj sě nade mnú, hospodine, nebo nemocen sem, uzdrav mě, hospodine, nebo zamúceny sú kosti mé.",
+      "Poděbr": "Smiluj sě nade mnú, hospodine, neboti nemocen sem, uzdrav mě, hospodine, nebo zamúceny sú všicky kosti mé.",
+      "Bosk": "Smiluj se nade mnú, hospodine, neb nemocný jsem, uzdrav mě, hospodine, neb jsú zamúceny všecky kosti mé.",
+      "Pad": "Smiluj sě nade mnú, pane, nebť nemocný jsem, uzdrav mne, pane, nebť jsú zamúceny kosti mé.",
+      "PTZ": "Smiluj se nade mnú, hospodine, nebť nemocen sem, uzdrav mě, hospodine, neboť sú se zarmútily kosti mé.",
+      "Bak": "Smiluj se nade mnú, hospodine, nebť nemocen sem, uzdrav mě, hospodine, neboť sú se zamútily kosti mé."
+    }
+  },
+  "Ps 6,4": {
+    "latina": "Et anima mea turbata est valde; sed tu, Domine, usquequo?",
+    "translations": {
+      "Witt": "<I> dušě má zamúcena jest velmi, a ty, hospodine, i dokudže?",
+      "Klem": "A dušě smutna jest velmi, ale ty, hospodine, dokovad?",
+      "Kap": "A dušě má smutna jest velmi, ale ty, hospodine, dokovad?",
+      "Poděbr": "I duše má smúcena jest velmi, ale ty, hospodine, dokudže?",
+      "Bosk": "A duše má zamúcena jest velmi, ale ty, hospodine, dokud?",
+      "Pad": "A dušě má zamúcena jest velmi, ale ty, pane, až dokud?",
+      "PTZ": "A duše má zamúcena jest velmi, než ty, hospodine, až dokavad?",
+      "Bak": "A duše má zarmúcena jest velmi, než ty, hospodine, až dokavad?"
+    }
+  },
+  "Ps 6,5": {
+    "latina": "Convertere, Domine, et eripe animam meam; salvum me fac propter misericordiam tuam.",
+    "translations": {
+      "Witt": "Obrati, hospodine, i zprosti duši mú, spasena mě učiň pro milosirdie tvé.",
+      "Klem": "Obrať sě, hospodine, vyprav dušu mú, zdráva mě učiň pro tvé milosirdenstvie.",
+      "Kap": "Obrať sě, hospodine, a vyprav duši mú, zdráva mě učiň pro tvé milosrdenstvie.",
+      "Poděbr": "Obrať sě, hospodine, i vyprosť duši mú, spasena mě učiň pro milost tvú.",
+      "Bosk": "Obrať se, hospodine, a zprosť duši mú, spasena mě učiň pro milosrdenstvie tvé.",
+      "Pad": "Obrať sě, pane, a zprosť duši mú, spasena mě učiň pro milosrdenstvie tvé.",
+      "PTZ": "Obrať se, pane, a vysvoboď duši mú, spasena mě učiň pro milosrdenstvie své.",
+      "Bak": "Obrať se, pane, a vysvoboď duši mú, spasena mě učiň pro milosrdenstvie své."
+    }
+  },
+  "Ps 6,6": {
+    "latina": "Quoniam non est in morte qui memor sit tui; in inferno autem quis confitebitur tibi?",
+    "translations": {
+      "Witt": "Nebo nenie v smirti, kto by pomněl na tě, a u pekle pak kto sě bude zpoviedati tobě?",
+      "Klem": "Nebo nenie v smrti, kto by pomněl tě, a u pekle kto zpoviedati sě bude tobě?",
+      "Kap": "Nebo není v smrti, kto by pomněl tě, a u pekle kto zpoviedati sě bude tobě?",
+      "Poděbr": "Nebo nenie v smrti, jenž pomněl by tebe, u pekle ale kto spoviedá sě tobě?",
+      "Bosk": "Neb nenie v smrti, kto by pomněl na tě, a u pekle kto chváliti bude tě?",
+      "Pad": "Nebť nenie v smrti, kto by pomněl na tě, a v pekle kto tě bude chváliti?",
+      "PTZ": "Neboť nenie v smrti, kto by se rozpomínal na tě, v pekle pak kto se bude vyznávati tobě?",
+      "Bak": "Neboť nenie v smrti, kto by se rozpomenul na tě, v pekle pak kto se bude vyznávati tobě?"
+    }
+  },
+  "Ps 6,7": {
+    "latina": "Laboravi in gemitu meo; lavabo per singulas noctes lectum meum: lacrimis meis stratum meum rigabo.",
+    "translations": {
+      "Witt": "Usiloval sem v stonání mém, zmyji na každú noc lože mé, slzami mými posteli mú uvlaži.",
+      "Klem": "Dělal sem ve vzdycháňú mém, umyju po všě noci lože mé, slzami mými posteľu mú opláču.",
+      "Kap": "Dělal sem ve vzdychání mém, umyji po všě noci lože mé, slzami mými posteli <mú> opláči.",
+      "Poděbr": "Usiloval sem v stonání mém, zmyji přěs každú noc lože mé, slzami mými posteli mú zroši.",
+      "Bosk": "Pracoval sem v zdychání svém, umyji po vše noci lože mé, slzami mými posteli svú svlažím.",
+      "Pad": "Pracoval sem ve lkání mém, umyji po všěcky noci lože mé, slzami mými posteli mú smáčeti budu.",
+      "PTZ": "Usiloval sem v kvielení svém, obmývati budu po všecky noci lože mé, slzami svými postel svú smáčeti budu.",
+      "Bak": "Usiloval sem v kvielení svém, omývati budu po všecky noci lože mé, slzami svými postel svú smáčeti budu."
+    }
+  },
+  "Ps 6,8": {
+    "latina": "Turbatus est a furore oculus meus; inveteravi inter omnes inimicos meos.",
+    "translations": {
+      "Witt": "Smúceno jest ot rydánie oko mé, obvetšěl sem mezi všěmi nepřátely mými.",
+      "Klem": "Smútilo sě jest ot roľúcenie oko mé, sstaral sem sě mezi všemi nepřátely mými.",
+      "Kap": "Smútilo sě jest ot rozlícení oko mé, sstaral sem sě mezi všěmi nepřátely mými.",
+      "Poděbr": "Zamútilo sě od hněvu oko mé, ostaral sem se mezi všěmi nepřátely mými.",
+      "Bosk": "Zamúceno jest od prchánie oko mé, zastaral sem se mezi všemi nepřátely mými.",
+      "Pad": "Zamúceno jest ot prchánie oko mé, zastaral sem sě mezi všěmi nepřátely mými.",
+      "PTZ": "Smúceno jest od prchlivosti oko mé, zstaral sem se mezi všemi nepřátely svými.",
+      "Bak": "Smúceno jest od prchlivosti oko mé, zstaral sem se mezi všemi nepřátely svými."
+    }
+  },
+  "Ps 6,9": {
+    "latina": "Discedite a me omnes qui operamini iniquitatem, quoniam exaudivit Dominus vocem fletus mei.",
+    "translations": {
+      "Witt": "Otejděte ote mne všicni, již hledáte nepravedlnosti, neb uslyšal hospodin hlas pláčě mého.",
+      "Klem": "Otejděte ote mne všickni, jižto děláte zlost, nebo uslyšal jest hospodin hlas pláčě mého.",
+      "Kap": "Otejděte ote mne všickni, jižto děláte zlost, nebo uslyšal jest hospodin hlas pláčě mého.",
+      "Poděbr": "Odstupte ode mne všickni, jenž činíte nespravedlnost, nebo uslyšal hospodin hlas pláče mého.",
+      "Bosk": "Odstupte ote mne všickni, kteříž činíte nepravost, neb jest uslyšal hospodin hlas pláče mého.",
+      "Pad": "Odstupte ote mne všickni, kteříž činíte nepravost, nebť jest uslyšal pán hlas pláčě mého.",
+      "PTZ": "Odejdětež ode mne všickni, kteříž pášete nepravost, neboť jest uslyšel hospodin hlas pláče mého.",
+      "Bak": "Odejdětež ote mne všickni, kteříž pášete nepravost, neboť jest uslyšal hospodin hlas pláče mého."
+    }
+  },
+  "Ps 6,10": {
+    "latina": "Exaudivit Dominus deprecationem meam; Dominus orationem meam suscepit.",
+    "translations": {
+      "Witt": "Uslyšal hospodin prosbu mú, hospodin modlitvu mú přijal.",
+      "Klem": "Uslyšal jest hospodin prosbu mú, hospodin modlitvu mú přijal.",
+      "Kap": "Uslyšal jest hospodin prosbu mú, hospodin modlitbu mú přijal.",
+      "Poděbr": "Uslyšal hospodin prozbu mú, hospodin modlitbu mú přijal.",
+      "Bosk": "Uslyšal jest hospodin prosbu mú, hospodin modlitbu mú přijal jest.",
+      "Pad": "Uslyšal jest pán prosbu mú, pán modlitbu mú přijal jest.",
+      "PTZ": "Uslyšal pán prosbu mú, hospodin modlitbu mú jest přijal.",
+      "Bak": "Uslyšal pán prosbu mú, hospodin modlitbu mú jest přijal."
+    }
+  },
+  "Ps 6,11": {
+    "latina": "Erubescant, et conturbentur vehementer, omnes inimici mei; convertantur, et erubescant valde velociter.",
+    "translations": {
+      "Witt": "Ustyďte sě i zamuťte sě náhle všicni nepřietelé moji, obraťte sě i zastyďte sě velmi birzo. Chvála…",
+      "Klem": "Styďte sě i smútie sě rychle všickni nepřietelé moji, obraťte sě a zapolejú sě velmě rúčě.",
+      "Kap": "Styďte sě i smuťte sě rychle všichni nepřietelé moji, obrátie sě a zapolejí sě velmi rúčě.",
+      "Poděbr": "Ať sě stydie i zamútie <náhle> všickni nepřátelé moji, ať sě obrátie i zastydie velmi brzce.",
+      "Bosk": "Zastyďte sě a zamuťte sě velmi všickni nepřietelé moji, obraťte se a zastyďte sě velmi rychle.",
+      "Pad": "Zastyďte sě a zamuťte sě velmi všickni nepřietelé moji, obraťte sě a zastyďte sě velmi rychle.",
+      "PTZ": "Ustyďtež se a zarmúceni buďte náramně všickni nepřátelé moji a obraťtež se a zastyďte velmi rychle.",
+      "Bak": "Ustyďtež se a zarmúceni buďte náramně všickni nepřátelé moji a obraťtež se a zastyďte velmi rychle."
+    }
+  }
+}

@@ -63,7 +63,7 @@ function TabPanel(props: TabPanelProps) {
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
-  const { psalterData, similarityData, manuscriptMetadata, loading, error } = useData();
+  const { psalterData, similarityData, manuscriptMetadata, verseData, loading, error } = useData();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -145,7 +145,7 @@ function App() {
             <ClusterView similarityData={similarityData} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <ComparisonView psalterData={psalterData} />
+            <ComparisonView psalterData={psalterData} verseData={verseData} />
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
             <StatisticsView
