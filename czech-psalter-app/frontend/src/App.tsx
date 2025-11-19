@@ -10,12 +10,13 @@ import {
   Tabs,
   Tab,
   Paper,
+  CircularProgress,
 } from '@mui/material';
 
-import ClusterView from './components/ClusterView';
-import ComparisonView from './components/ComparisonView';
-import StatisticsView from './components/StatisticsView';
-import SearchPanel from './components/SearchPanel';
+import { useData } from './utils/useData';
+import ClusterView from './components/ClusterView-updated';
+import ComparisonView from './components/ComparisonView-updated';
+import StatisticsView from './components/StatisticsView-updated';
 
 const theme = createTheme({
   palette: {
@@ -62,10 +63,54 @@ function TabPanel(props: TabPanelProps) {
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
+  const { psalterData, similarityData, manuscriptMetadata, loading, error } = useData();
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <CircularProgress size={60} />
+          <Typography variant="h6">Loading Czech Psalter Data...</Typography>
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
+  if (error || !psalterData || !similarityData || !manuscriptMetadata) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <Typography variant="h6" color="error">
+            Error loading data: {error || 'Unknown error'}
+          </Typography>
+        </Box>
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,13 +142,16 @@ function App() {
           </Paper>
 
           <TabPanel value={tabValue} index={0}>
-            <ClusterView />
+            <ClusterView similarityData={similarityData} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <ComparisonView />
+            <ComparisonView psalterData={psalterData} />
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
-            <StatisticsView />
+            <StatisticsView
+              psalterData={psalterData}
+              manuscriptMetadata={manuscriptMetadata}
+            />
           </TabPanel>
         </Container>
       </Box>
