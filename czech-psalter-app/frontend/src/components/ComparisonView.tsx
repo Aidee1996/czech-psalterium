@@ -23,8 +23,7 @@ import {
   Collapse,
   IconButton,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
 import { WordPosition } from '../types';
 
 interface VerseData {
