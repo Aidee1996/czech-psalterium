@@ -22,10 +22,11 @@ export function useData(): DataState {
   useEffect(() => {
     async function loadData() {
       try {
+        const baseUrl = import.meta.env.BASE_URL;
         const [psalterRes, similarityRes, metadataRes] = await Promise.all([
-          fetch('/data/psalter_data.json'),
-          fetch('/data/similarity_analysis.json'),
-          fetch('/data/manuscript_metadata.json'),
+          fetch(`${baseUrl}data/psalter_data.json`),
+          fetch(`${baseUrl}data/similarity_analysis.json`),
+          fetch(`${baseUrl}data/manuscript_metadata.json`),
         ]);
 
         if (!psalterRes.ok || !similarityRes.ok || !metadataRes.ok) {
